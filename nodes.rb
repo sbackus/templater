@@ -33,7 +33,6 @@ class EachNode < Node
   def render(context)
     path_to_data = @token.split(" ")[1]
     variable_name = @token.split(" ")[2]
-    answer = ""
     unless context.nil?
       new_context = context.clone
       array = get_data(context, path_to_data.split("."))
