@@ -26,12 +26,12 @@ describe "templater" do
 		expected_result = "<h1> substitution works! </h1>"
 		expect(templater(template, data)).to eq expected_result
 	end
-	# it "substitutes multiple template tags with data" do
-	# 	template = "<h1> <*title*> </h1> <p> <*body*> </p>"
-	# 	data = JSON.parse('{"title": "substitution works!", "body": "for the body too!"}')
-	# 	expected_result = "<h1> substitution works! </h1> <p> for the body too! </p>"
-	# 	expect(templater(template, data)).to eq expected_result
-	# end
+	it "substitutes multiple template tags with data" do
+		template = "<h1> <*title*> </h1> <p> <*body*> </p>"
+		data = JSON.parse('{"title": "substitution works!", "body": "for the body too!"}')
+		expected_result = "<h1> substitution works! </h1> <p> for the body too! </p>"
+		expect(templater(template, data)).to eq expected_result
+	end
 end
 
 
