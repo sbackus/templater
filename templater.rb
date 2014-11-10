@@ -1,14 +1,22 @@
 require 'json'
 
-def templater(template, json)
+class Templater
 
-	tags = template.scan(/<\*.*?\*>/)
- 	for tag in tags
- 		replacement = get_data(json, tag[2..-3].strip.split("."))
- 		template.gsub!(tag, replacement)
+  def initialize(template)
+    @template = template
+  end
+
+	def render(json)
+		tag_regex = /<\*.*?\*>/
+		tags = @template.scan(tag_regex)
+	 	for tag in tags
+	 		replacement = get_data(json, tag[2..-3].strip.split("."))
+	 		@template.gsub!(tag, replacement)
+		end
+		return @template
 	end
-	return template
 end
+
 
 
 def get_data(json, path_to_data)
