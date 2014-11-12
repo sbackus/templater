@@ -37,9 +37,21 @@ describe "Templater" do
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
 	it "recognizes the EACH tag" do
-		template = "<* EACH students student *><* ENDEEACH *>"
+		template = "<* EACH students student *><* ENDEACH *>"
 		data = nil
 		expected_result = ""
+		expect(Templater.new(template).render(data)).to eq expected_result
+	end
+	it "renders the contents of the EACH tag once for each thing in the list" do
+		template = "<* EACH students student *>student<* ENDEACH *>"
+		data = {"students" => [1,2,3,4,5]}
+		expected_result = "student"*5
+		expect(Templater.new(template).render(data)).to eq expected_result
+	end
+	it "creates a new context for each item in the list and can use the new context for varible tags" do
+		template = "<* EACH students student *><*student*>, <* ENDEACH *>"
+		data = {"students" => ["Miles Morales","kamala khan","Barbara Gordon"]}
+		expected_result = "Miles Morales, kamala khan, Barbara Gordon, "
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
 end

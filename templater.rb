@@ -14,6 +14,8 @@ class Compiler
 	TAG_START = '<\*'
 	TAG_END = '\*>'
 	TAG_REGEX = /(#{TAG_START}.*?#{TAG_END})/
+	END_EACH = /(#{TAG_START}\WENDEACH\W#{TAG_END})/
+	START_EACH = /(#{TAG_START}\WEACH.*?#{TAG_END})/
 	def initialize(template)
 		@template = template
 	end
@@ -24,9 +26,20 @@ class Compiler
 
 	def compile
     root_node = Node.new(@template)
+    context_stack = [root_node]
     get_tokens().each do |token|
-        new_node = create_node(token)
-        root_node.children << new_node
+			if token =~ END_EACH
+				context_stack.pop
+			elsif token =~ START_EACH
+				new_node = create_node(token)
+				context_node = context_stack[-1]
+      	context_node.children << new_node
+      	context_stack.push(new_node)
+			else
+	      new_node = create_node(token)
+	      context_node = context_stack[-1]
+	      context_node.children << new_node
+	    end
     end
     return root_node
 	end
@@ -63,7 +76,19 @@ end
 
 class EachNode < Node
 	def render(context)
-		""
+		path_to_data = @token.split(" ")[1]
+		variable_name = @token.split(" ")[2]
+		answer = ""
+		if context
+			new_context = context.clone
+			get_data(context, path_to_data.split).each do |var|
+				new_context[variable_name] = var
+				answer += @children.map do |child_node|
+					child_node.render(new_context)
+				end.join
+			end
+		end
+		return answer
 	end
 end
 
