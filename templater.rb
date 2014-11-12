@@ -33,7 +33,11 @@ class Compiler
 
 	def create_node(token)
 		if token =~ TAG_REGEX
-			return VariableNode.new(token[2...-2].strip)
+			if token.include? 'EACH'
+				return EachNode.new(token[2...-2].strip)
+			else
+				return VariableNode.new(token[2...-2].strip)
+			end
 		else
 			return TextNode.new(token)
 		end
@@ -54,6 +58,12 @@ class Node
 		@children.map do |child_node|
 			child_node.render(context)
 		end.join
+	end
+end
+
+class EachNode < Node
+	def render(context)
+		""
 	end
 end
 

@@ -36,6 +36,12 @@ describe "Templater" do
 		expected_result = "<h1> title of the page </h1> <p> first p of the body of the page </p>"
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
+	it "recognizes the EACH tag" do
+		template = "<* EACH students student *><* ENDEEACH *>"
+		data = nil
+		expected_result = ""
+		expect(Templater.new(template).render(data)).to eq expected_result
+	end
 end
 
 
