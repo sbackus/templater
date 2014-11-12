@@ -1,3 +1,4 @@
+require 'pry'
 class Templater
 
   def initialize(template)
@@ -81,7 +82,7 @@ class EachNode < Node
 		answer = ""
 		if context
 			new_context = context.clone
-			get_data(context, path_to_data.split).each do |var|
+			get_data(context, path_to_data.split(".")).each do |var|
 				new_context[variable_name] = var
 				answer += @children.map do |child_node|
 					child_node.render(new_context)
@@ -105,6 +106,7 @@ class TextNode < Node
 end
 
 def get_data(json, path_to_data)
+	#TODO can I move the split inside here an have path_to_data be a dotted string?
 	first = path_to_data.first
 	if path_to_data.length == 1
 		return json[first]

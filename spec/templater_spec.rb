@@ -49,9 +49,18 @@ describe "Templater" do
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
 	it "creates a new context for each item in the list and can use the new context for varible tags" do
-		template = "<* EACH students student *><*student*>, <* ENDEACH *>"
-		data = {"students" => ["Miles Morales","kamala khan","Barbara Gordon"]}
+		template = "<* EACH students student *><*student.name*>, <* ENDEACH *>"
+		data = {"students" => [{"name"=>"Miles Morales"},{"name"=>"kamala khan"},{"name"=>"Barbara Gordon"}]}
 		expected_result = "Miles Morales, kamala khan, Barbara Gordon, "
+		expect(Templater.new(template).render(data)).to eq expected_result
+	end
+	it "handles nested EACH" do
+		template = "<* EACH students student *><* EACH student.nicknames nickname *><p><* nickname *></p><* ENDEACH *><* ENDEACH *>"
+		data =   {"students"=> [
+    { "name"=> "Barbara Gordon", "nicknames"=> ["Bat Girl", "Oracle"] },
+    { "name"=> "Miles Morales", "nicknames"=> ["Spidey", "Spiderman", "Spider-Man"] }
+  ]}
+		expected_result = "<p>Bat Girl</p><p>Oracle</p><p>Spidey</p><p>Spiderman</p><p>Spider-Man</p>"
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
 end
