@@ -20,19 +20,19 @@ describe "Templater" do
 	end
 	it "substitutes a template tag with data" do
 		template = "<h1> <* title *> </h1>"
-		data = JSON.parse('{"title": "substitution works!"}')
+		data = {"title"=> "substitution works!"}
 		expected_result = "<h1> substitution works! </h1>"
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
 	it "substitutes multiple template tags with data" do
 		template = "<h1> <*title*> </h1> <p> <*body*> </p>"
-		data = JSON.parse('{"title": "substitution works!", "body": "for the body too!"}')
+		data = {"title"=> "substitution works!", "body"=> "for the body too!"}
 		expected_result = "<h1> substitution works! </h1> <p> for the body too! </p>"
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
 	it "substitutes a template tag using nested data" do
 		template = "<h1> <*page.title*> </h1> <p> <*page.body.p1*> </p>"
-		data = JSON.parse('{"page":{"title": "title of the page", "body": {"p1": "first p of the body of the page"}}}')
+		data = {"page"=>{"title"=> "title of the page", "body"=> {"p1"=> "first p of the body of the page"}}}
 		expected_result = "<h1> title of the page </h1> <p> first p of the body of the page </p>"
 		expect(Templater.new(template).render(data)).to eq expected_result
 	end
