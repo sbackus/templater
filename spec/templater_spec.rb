@@ -1,5 +1,5 @@
 require 'rspec'
-require './templater.rb'
+require_relative '../src/templater'
 
 describe "Templater" do
 	it "returns the template without modifications if it contains no tags" do

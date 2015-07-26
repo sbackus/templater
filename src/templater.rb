@@ -1,6 +1,5 @@
-
-require './nodes.rb'
-require './compiler.rb'
+Dir[File.dirname(__FILE__) + '/nodes/*.rb'].each {|file| require file }
+require_relative 'compiler'
 
 class Templater
 
