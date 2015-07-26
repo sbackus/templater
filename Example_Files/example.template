@@ -3,9 +3,9 @@
     <title><* page.title *></title>
   </head>
   <body>
-    <h1><* teacher.name *></h1>
+    <h1>Teacher: <* teacher.name *></h1>
     <* EACH students student *>
-      <* student.name *>
+      <h3><* student.name *></h3>
       <* EACH student.nicknames nickname *>
         <p><* nickname *></p>
       <* ENDEACH *>

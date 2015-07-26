@@ -1,0 +1,13 @@
+{
+  "page": {
+    "title": "Templating Example"
+  },
+  "teacher": {
+    "name": "Kitty Pryde"
+  },
+  "students": [
+    { "name": "Diana Prince", "nicknames": ["Wonder Woman"] },
+    { "name": "Miles Morales", "nicknames": ["Spidey", "Spiderman", "Spider-Man"] },
+    { "name": "Jean Grey", "nicknames": ["Pheonix", "Dark Pheonix", "White Pheonix of the Crown", "Red", "Ms. Psyche", "Marvel Girl"] }
+  ]
+}
