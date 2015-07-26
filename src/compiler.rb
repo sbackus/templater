@@ -6,12 +6,8 @@ class Compiler
   END_EACH = /(#{TAG_START}\WENDEACH\W#{TAG_END})/
   START_EACH = /(#{TAG_START}\WEACH.*?#{TAG_END})/
 
-  def initialize(template)
-    @template = template
-  end
-
-  def compile(tokens)
-    root_node = RootNode.new(@template)
+  def self.compile(tokens)
+    root_node = RootNode.new(nil)
     context_stack = [root_node]
     tokens.each do |token|
       if token =~ END_EACH
@@ -27,14 +23,14 @@ class Compiler
   end
 
 private
-  def add_child_to_the_context(token, context_stack)
+  def self.add_child_to_the_context(token, context_stack)
     new_node = create_node token
     context_node = context_stack.last
     context_node.children << new_node
     new_node
   end
 
-  def create_node(token)
+  def self.create_node(token)
     if token =~ TAG
       if token.include? 'EACH'
         return EachNode.new clean(token)
@@ -46,7 +42,7 @@ private
     end
   end
 
-  def clean(token)
+  def self.clean(token)
     token[2...-2].strip
   end
 
