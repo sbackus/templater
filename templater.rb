@@ -4,14 +4,11 @@ require './compiler.rb'
 
 class Templater
 
-  def initialize(template)
-    @template = template
-    @root = Compiler.new(template).compile
+  def self.render (template, data)
+    syntaxTree = Compiler.new(template).compile
+    syntaxTree.render(data)
   end
 
-  def render(data)
-    @root.render data
-  end
 end
 
 

@@ -4,4 +4,4 @@ The template file will be in mostly-HTML but will contain some places to insert 
 
 It is runnable as a command-line command called templater, in the following format:
 
-templater template.templor data.json output.html
+templater template.template data.json output.html
