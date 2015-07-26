@@ -1,5 +1,6 @@
 require './src/nodes/node'
-class TextNode < Node
+class TextNode
+  include Node
   def render(context)
     return @token
   end

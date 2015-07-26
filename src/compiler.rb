@@ -11,7 +11,7 @@ class Compiler
   end
 
   def compile
-    root_node = Node.new(@template)
+    root_node = RootNode.new(@template)
     context_stack = [root_node]
     get_tokens().each do |token|
       if token =~ END_EACH

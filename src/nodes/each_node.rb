@@ -1,5 +1,6 @@
 require './src/nodes/node'
-class EachNode < Node
+class EachNode
+  include Node
   def render(context)
     path_to_data = @token.split(" ")[1]
     variable_name = @token.split(" ")[2]

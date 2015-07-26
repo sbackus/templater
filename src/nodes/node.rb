@@ -1,4 +1,4 @@
-class Node
+module Node
 
   attr_accessor :children
 
@@ -7,12 +7,7 @@ class Node
     @children = []
   end
 
-  def render(context)
-    render_children(context)
-  end
-
-  protected
-
+protected
   def render_children(context)
     @children.map do |child_node|
       child_node.render(context)
@@ -27,4 +22,5 @@ class Node
       return get_data(json[first], path_to_data[1..-1])
     end
   end
+
 end
