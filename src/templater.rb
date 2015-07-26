@@ -1,10 +1,11 @@
 Dir[File.dirname(__FILE__) + '/nodes/*.rb'].each {|file| require file }
 require_relative 'compiler'
-
+require_relative 'tokenizer'
 class Templater
 
   def self.render (template, data)
-    syntaxTree = Compiler.new(template).compile
+    tokens = Tokenizer.get_tokens(template)
+    syntaxTree = Compiler.new(template).compile(tokens)
     syntaxTree.render(data)
   end
 

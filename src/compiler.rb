@@ -10,10 +10,10 @@ class Compiler
     @template = template
   end
 
-  def compile
+  def compile(tokens)
     root_node = RootNode.new(@template)
     context_stack = [root_node]
-    get_tokens().each do |token|
+    tokens.each do |token|
       if token =~ END_EACH
         context_stack.pop
       elsif token =~ START_EACH
@@ -27,10 +27,6 @@ class Compiler
   end
 
 private
-  def get_tokens()
-    @template.split(TAG)
-  end
-
   def add_child_to_the_context(token, context_stack)
     new_node = create_node token
     context_node = context_stack.last
