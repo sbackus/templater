@@ -20,13 +20,15 @@ class Token
     @fragment =~ END_EACH
   end
 
+  def contents
+    @fragment =~ TAG ? clean(@fragment) : @fragment
+  end
+
   def path_to_data
     if @fragment =~ START_EACH
-      clean(@fragment).split(" ")[1].split(".")
+      contents.split(" ")[1].split(".")
     elsif @fragment =~ TAG
-      clean(@fragment).split(".")
-    else
-      []
+      contents.split(".")
     end
   end
 
@@ -35,7 +37,7 @@ class Token
   end
 
   def variable_name
-    clean(@fragment).split(" ")[2]
+    contents.split(" ")[2]
   end
 
   def clean(token)
